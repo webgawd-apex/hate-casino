@@ -83,7 +83,7 @@ export default function Home() {
         </div>
 
         {/* Players Area */}
-        <div className="order-3 lg:order-3 flex-shrink-0 h-[300px] lg:h-auto">
+        <div className="order-3 lg:order-3 flex-shrink-0 h-[300px] lg:h-full">
           <PlayerList players={gameState.players} />
         </div>
       </main>

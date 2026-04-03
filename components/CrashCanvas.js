@@ -118,13 +118,13 @@ export default function CrashCanvas({ multiplier, status }) {
       <canvas ref={canvasRef} className="w-full h-full opacity-60" />
 
       {/* Axis Labels */}
-      <div className="absolute bottom-10 right-10 flex items-center gap-2 text-[10px] font-black text-zinc-700 uppercase tracking-widest">
+      <div className="absolute bottom-4 md:bottom-10 right-4 md:right-10 flex items-center gap-2 text-[10px] font-black text-zinc-700 uppercase tracking-widest">
         <span>Live Stream</span>
         <div className="w-8 h-[1px] bg-zinc-800" />
       </div>
 
       {/* Status Overlay */}
-      <div className="absolute bottom-10 left-10 flex items-center gap-4">
+      <div className="absolute bottom-4 md:bottom-10 left-4 md:left-10 flex items-center gap-4">
         <div className={`flex items-center gap-2 px-4 py-2 rounded-xl border ${isBetting ? 'bg-amber-500/10 border-amber-500/20' : 'bg-purple-600/10 border-purple-500/20'}`}>
           <div className={`w-2 h-2 rounded-full animate-pulse ${isBetting ? 'bg-amber-500' : 'bg-purple-500'}`} />
           <span className={`text-xs font-black uppercase tracking-widest ${isBetting ? 'text-amber-400' : 'text-purple-400'}`}>
