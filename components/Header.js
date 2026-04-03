@@ -43,17 +43,17 @@ export default function Header() {
   }, [connection, publicKey]);
 
   return (
-    <header className="sticky top-0 z-50 glass border-b border-white/5 px-6 py-4 flex items-center justify-between shadow-2xl">
+    <header className="sticky top-0 z-50 glass border-b border-white/5 px-4 md:px-6 py-4 flex items-center justify-between shadow-2xl">
       <div className="flex items-center gap-3">
         <div className="w-10 h-10 rounded-xl overflow-hidden shadow-[0_0_15px_rgba(168,85,247,0.5)] border border-purple-500/20">
           <img src="/logo.png" alt="HateCasino Logo" className="w-full h-full object-cover" />
         </div>
-        <span className="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-white to-white/60 tracking-tighter uppercase italic">
+        <span className="text-xl md:text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-white to-white/60 tracking-tighter uppercase italic">
           HATE<span className="text-purple-500">CASINO</span>
         </span>
       </div>
       
-      <div className="flex items-center gap-6">
+      <div className="flex items-center gap-4 md:gap-6">
         <div className="hidden md:flex flex-col items-end">
           <span className="text-[10px] uppercase tracking-widest text-zinc-500 font-bold">Balance</span>
           <span className="text-lg font-black font-mono text-emerald-400">

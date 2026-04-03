@@ -76,3 +76,33 @@ body {
 .animate-glow {
   animation: glow 3s ease-in-out infinite;
 }
+
+/* Wallet Button Custom Overrides */
+.wallet-adapter-button-custom {
+  background: rgba(147, 51, 234, 0.1) !important;
+  border: 1px solid rgba(147, 51, 234, 0.2) !important;
+  height: 40px !important;
+  line-height: 40px !important;
+  padding: 0 16px !important;
+  font-size: 13px !important;
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.1em !important;
+  border-radius: 12px !important;
+  transition: all 0.3s ease !important;
+}
+
+.wallet-adapter-button-custom:hover {
+  background: rgba(147, 51, 234, 0.2) !important;
+  border-color: rgba(147, 51, 234, 0.4) !important;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+  .wallet-adapter-button-custom {
+    height: 34px !important;
+    line-height: 34px !important;
+    padding: 0 12px !important;
+    font-size: 11px !important;
+  }
+}
