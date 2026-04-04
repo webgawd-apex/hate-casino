@@ -38,31 +38,68 @@ export default function CrashCanvas({ multiplier, status }) {
     };
 
     const drawCurve = () => {
-      if (isBetting) return; // Don't draw curve during betting
+      if (isBetting || multiplier <= 1) return;
 
+      const margin = 60;
+      const graphWidth = rect.width - margin * 2;
+      const graphHeight = rect.height - margin * 2;
+      const originX = margin;
+      const originY = rect.height - margin;
+
+      // Dynamic scaling: Adjust how fast the graph reaches the edges
+      // We want it to feel long and exponential
+      const xProgress = Math.min(1, (multiplier - 1) / 5); 
+      const yProgress = Math.min(1, Math.log10(multiplier) / Math.log10(100)); // Log scale for Y to handle high multipliers
+
+      const endX = originX + graphWidth * xProgress;
+      const endY = originY - graphHeight * yProgress;
+
+      // 1. Draw Gradient Fill
+      const gradient = ctx.createLinearGradient(0, endY, 0, originY);
+      gradient.addColorStop(0, isCrashed ? 'rgba(244, 63, 94, 0.2)' : 'rgba(147, 51, 234, 0.2)');
+      gradient.addColorStop(1, 'transparent');
+
+      ctx.fillStyle = gradient;
+      ctx.beginPath();
+      ctx.moveTo(originX, originY);
+      
+      // Plot the curve points for the fill
+      for (let i = 0; i <= 100; i++) {
+        const t = i / 100;
+        if (t > xProgress) break;
+        const currX = originX + graphWidth * t;
+        // Exponential growth approximation for the visual curve
+        const currY = originY - graphHeight * (Math.pow(1.5, t * 10) - 1) / (Math.pow(1.5, 10) - 1) * yProgress; 
+        ctx.lineTo(currX, currY);
+      }
+      ctx.lineTo(endX, originY);
+      ctx.closePath();
+      ctx.fill();
+
+      // 2. Draw the Main Line
       ctx.strokeStyle = isCrashed ? '#f43f5e' : '#9333ea';
-      ctx.lineWidth = 4;
+      ctx.lineWidth = 5;
       ctx.lineCap = 'round';
       ctx.lineJoin = 'round';
       ctx.shadowBlur = 15;
-      ctx.shadowColor = isCrashed ? 'rgba(244, 63, 94, 0.5)' : 'rgba(147, 51, 234, 0.5)';
-      
-      const progress = Math.min(1, (multiplier - 1) / 10); // Simplified visual scaling
-      const endX = 50 + (rect.width - 150) * progress;
-      const endY = (rect.height - 50) - (rect.height - 200) * progress;
+      ctx.shadowColor = isCrashed ? 'rgba(244, 63, 94, 0.8)' : 'rgba(147, 51, 234, 0.8)';
 
       ctx.beginPath();
-      ctx.moveTo(50, rect.height - 50);
-      ctx.quadraticCurveTo(
-        rect.width * 0.5, rect.height - 50,
-        endX, endY
-      );
+      ctx.moveTo(originX, originY);
+      for (let i = 0; i <= 100; i++) {
+        const t = i / 100;
+        if (t > xProgress) break;
+        const currX = originX + graphWidth * t;
+        const currValue = (Math.pow(1.5, t * 10) - 1) / (Math.pow(1.5, 10) - 1) * yProgress;
+        const currY = originY - graphHeight * currValue;
+        ctx.lineTo(currX, currY);
+      }
       ctx.stroke();
-      
-      // Draw end point glow
+
+      // 3. Draw End Point Glow
+      ctx.shadowBlur = 25;
+      ctx.shadowColor = isCrashed ? '#f43f5e' : '#fff';
       ctx.fillStyle = '#fff';
-      ctx.shadowBlur = 20;
-      ctx.shadowColor = '#fff';
       ctx.beginPath();
       ctx.arc(endX, endY, 6, 0, Math.PI * 2);
       ctx.fill();
